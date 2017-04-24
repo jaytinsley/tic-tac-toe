@@ -1,85 +1,91 @@
-# p "this is a string"
-# # p "100"+10
-# p 10+10
-# p "100"+"200"
-# p "ian" + "jay"
+def is_number?(s)
+  if Float(s)
+    return true
+  end
+rescue
+  return false
+end
 
-# color1 = "black"
-# color2 = "white"
-# color3 = "black"
+def printBoard()
 
-# result = (color1==color2)
-
-# result2 = 100
-
-# p result
-# p result2
-
-
-ian = "cool`"
-jay= "tall"
-daisy = "small"
-
-myArrayx = [ian,jay,daisy]
-
-
-# Simple way
-
-# $a1=" "
-# $b1=" "
-# $c1=" "
-# $a2=" "
-# $b2=" "
-# $c2=" "
-# $a3=" "
-# $b3=" "
-# $c3=" "
-
-board = [" "," "," "," "," "," "," "," "," "]
-
-# def doSomeStuff()
-#   puts "
-# i am doing some stuff
-
-# done
-#   "
-# end
-
-def printBoard(board)
   puts "-------------"
-  puts "| " + board[0]  + " | " +  board[1]  + " | " +  board[2]  + " | "
+
+  puts "| " + $rowA[0]  + " | " +  $rowA[1]  + " | " +  $rowA[2]  + " | "
   puts "-------------"
-  puts "| " + board[3]  + " | " +  board[4]  + " | " +  board[5]  + " | "
+  puts "| " + $rowB[0]  + " | " +  $rowB[1]  + " | " +  $rowB[2]  + " | "
   puts "-------------"
-  puts "| " + board[6]  + " | " +  board[7]  + " | " +  board[8]  + " | "
+  puts "| " + $rowC[0]  + " | " +  $rowC[1]  + " | " +  $rowC[2]  + " | "
   puts "-------------"
 
 end
 
-# def printBoard()
+def placePosition(go)
 
-#   puts "-------------"
-#   puts "| " + $a1  + " | " +  $b1  + " | " +  $c1  + " | "
-#   puts "-------------"
-#   puts "| " + $a2  + " | " +  $b2  + " | " +  $c2  + " | "
-#   puts "-------------"
-#   puts "| " + $a3  + " | " +  $b3  + " | " +  $c3  + " | "
-#   puts "-------------"
+  go = go.upcase
 
-# end
+  if (go.length!=2)
+    throw ("your go must be two characters in the form letter number i.e A1")
+  end
 
-printBoard(board)
+  letter = go[0]
 
-puts "your turn:    "
-go1=gets.chomp()
+  if !is_number?(go[1]) then
+    throw ("Second character must be numeric")
+  end
 
-# if (go1=="a1") then
-#   p "here"
-#   $a1="X"
-# end
+  number = go[1].to_i
 
-puts "you went in position " + go1
+  if (letter!="A" && letter!="B" && letter!="C") then
+    throw ("First character must be A, B or C!")
+  end
 
+  if (number>3) || (number==0) then
+    throw ("numbers must be 1, 2 or 3!")
+  end
+
+  row=nil
+
+  # Work out which row to use
+  if letter=="A" then
+    row=$rowA
+  elsif letter=="B" then
+    row=$rowB
+  elsif letter=="C" then
+    row=$rowC
+  end
+
+  # Remember the array is zero-indexed!
+  index = number-1
+
+  row[index]="X"
+  puts "you went in position " + go
+
+
+end
+
+
+# =======================program ends here the program border no mexicans====================
+
+
+p "WELCOME TO JAY TIC-TAC-TOE!"
+
+$rowA = [" "," "," "]
+$rowB = [" "," "," "]
+$rowC = [" "," "," "]
+
+#Print empty board
 printBoard()
 
+# Take turns until whatever
 
+loop do
+  # some code here
+  puts "your turn:    "
+  go = gets.chomp()
+  begin
+    placePosition(go)
+    printBoard()
+  # rescue
+    # p "you screwed up, go again"
+  end
+end
