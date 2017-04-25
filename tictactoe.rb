@@ -19,7 +19,10 @@ def printBoard()
 
 end
 
-def placePosition(go)
+# Parameters
+# go i.e. A1
+# character i.e. "X"
+def placePosition(go, character)
 
   go = go.upcase
 
@@ -57,7 +60,9 @@ def placePosition(go)
   # Remember the array is zero-indexed!
   index = number-1
 
-  row[index]="X"
+  row[index]=character
+
+
   puts "you went in position " + go
 
 
@@ -77,15 +82,21 @@ $rowC = [" "," "," "]
 printBoard()
 
 # Take turns until whatever
-
 loop do
-  # some code here
-  puts "your turn:    "
-  go = gets.chomp()
+
   begin
-    placePosition(go)
+    puts "your turn player 1 (X): "
+    go = gets.chomp()
+    placePosition(go, "X")
     printBoard()
-  # rescue
-    # p "you screwed up, go again"
+
+    puts "your turn player 2 (O): "
+    go = gets.chomp()
+    placePosition(go, "O")
+    printBoard()
+
+
+  rescue
+    p "you screwed up, go again"
   end
 end
